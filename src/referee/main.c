@@ -8,7 +8,7 @@ void readingArguments(int argc, char *argv[], tournment *t) {
     t->timeChampion = TIMECHAMPION;
     t->waitingTime = WAITINGTIME;
     printf("Duration Champion: %d\nWaiting Time: %d\n", t->timeChampion,
-           t->waitingTime);
+           t->waitingTime); 
   } else {
     t->timeChampion = atoi(argv[1]);
     t->waitingTime = atoi(argv[2]);
