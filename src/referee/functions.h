@@ -7,5 +7,8 @@ tournment t;
 
 void readingArguments(int argc, char *argv[], tournment *t);
 void readingenvvars(tournment *t);
+void SIGhandler(int signo);
+void shutdown();
+void creatingRefereePipe();
 
 #endif

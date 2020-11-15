@@ -1,17 +1,21 @@
 #ifndef __STRUCTS_H__
 #define __STRUCTS_H__
 
+#include <fcntl.h>
+#include <signal.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <stdlib.h>
 
 #define MAXPLAYERS 30
 #define GAMEDIR "/home/rodrigo/Desktop/SO/Trabalho/Champion/build/game.exe"
 #define TIMECHAMPION 20
 #define WAITINGTIME 5
+#define PIPE_REFEREE "../src/referee/PIPE_REFEREE"
 
 typedef struct {
   char command[50];
