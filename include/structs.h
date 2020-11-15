@@ -25,6 +25,7 @@ typedef struct {
 typedef struct {
   char pergunta[100];
   char resposta[50];
+  
 } game;
 
 typedef struct {
