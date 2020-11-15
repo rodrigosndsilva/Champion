@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-c -Wall
 LDFLAGS=-pthread -lncurses
-SOURCES=main.c commands.c
+SOURCES=main.c commands.c functions.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=../../build/referee
 

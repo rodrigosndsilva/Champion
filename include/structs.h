@@ -1,3 +1,6 @@
+#ifndef __STRUCTS_H__
+#define __STRUCTS_H__
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
@@ -25,7 +28,6 @@ typedef struct {
 typedef struct {
   char pergunta[100];
   char resposta[50];
-  
 } game;
 
 typedef struct {
@@ -41,3 +43,5 @@ typedef struct {
   int Gamepid;
   int points;
 } playersinTournment;
+
+#endif
