@@ -6,7 +6,7 @@
 #include "commands.h"
 #include "functions.h"
 
-tournment t;
+Tournment *t;
 
 int main(int argc, char *argv[]);
 

@@ -3,12 +3,14 @@
 
 #include "../../include/structs.h"
 
-tournment t;
+Tournment *t;
 
-void readingArguments(int argc, char *argv[], tournment *t);
-void readingenvvars(tournment *t);
+void readingArguments(int argc, char *argv[], Tournment *t);
+void readingenvvars(Tournment *t);
 void SIGhandler(int signo);
 void shutdown();
-void creatingRefereePipe();
+int creatingRefereePipe();
+bool login(Tournment *t);
+void receiver(Tournment *t);
 
 #endif

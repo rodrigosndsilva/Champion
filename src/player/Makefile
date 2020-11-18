@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-c -Wall
-LDFLAGS=-pthread -lncurses
-SOURCES=main.c
+LDFLAGS=-pthread -Wall -Wextra
+SOURCES=main.c functions.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=../../build/player
 

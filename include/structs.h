@@ -2,6 +2,7 @@
 #define __STRUCTS_H__
 
 #include <fcntl.h>
+#include <pthread.h>
 #include <signal.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -15,11 +16,39 @@
 #define GAMEDIR "/home/rodrigo/Desktop/SO/Trabalho/Champion/build/game.exe"
 #define TIMECHAMPION 20
 #define WAITINGTIME 5
-#define PIPE_REFEREE "../src/referee/PIPE_REFEREE"
+#define REFEREE_PIPE "../src/referee/REFEREE_PIPE"
+#define LOGIN 1
 
 typedef struct {
   char command[50];
-} admin;
+  int fd;
+} Referee;
+
+typedef struct {
+  char pergunta[50];
+  char resposta[50];
+} QandA;
+
+typedef struct {
+  int pid;
+  int cont;
+  QandA qanda[30];
+  bool answerResult;
+} Game;
+
+typedef struct {
+  char username[20];
+  int pid;
+  int points;
+  int Gamepid;
+} Player;
+
+typedef struct {
+  char username[20];
+  int pid;
+  int Gamepid;
+  int points;
+} PlayersinTournment;
 
 typedef struct {
   char winner[50];
@@ -27,25 +56,12 @@ typedef struct {
   int waitingTime;
   int maxPlayers;
   char gameDir[50];
-} tournment;
-
-typedef struct {
-  char pergunta[100];
-  char resposta[50];
-} game;
-
-typedef struct {
-  char username[20];
-  int pid;
-  int points;
-  int Gamepid;
-} player;
-
-typedef struct {
-  char username[20];
-  int pid;
-  int Gamepid;
-  int points;
-} playersinTournment;
+  int action;
+  Player player;
+  Game g;
+  Referee r;
+  Player p[MAXPLAYERS];
+  PlayersinTournment pt;
+} Tournment;
 
 #endif
