@@ -17,6 +17,26 @@ void SIGhandler(int signo) {
 
 void shutdown() {
   char PIPE[50];
+  int fd;
+  Tournment send;
+
+  sprintf(PIPE, "../src/player/PLAYER_PIPE-> %d", getpid());
+
+  if (logged == 1) {
+    send.p.pid = getpid();
+    send.action = CLIENT_SHUTDOWN;
+    fd = open(REFEREE_PIPE, O_WRONLY);
+    write(fd, &send, sizeof(send));
+  }
+
+  unlink(PIPE);
+  printf("PLAYER_PIPE-> %d terminated\n", getpid());
+  pthread_kill(pthread_self(), SIGINT);
+  exit(0);
+}
+
+void serverShutdown() {
+  char PIPE[50];
   sprintf(PIPE, "../src/player/PLAYER_PIPE-> %d", getpid());
   unlink(PIPE);
   printf("PLAYER_PIPE-> %d terminated\n", getpid());
@@ -48,9 +68,9 @@ void login(Tournment t) {
 
   while (logged == 0) {
     printf("Enter your name: ");
-    scanf("%s", t.player.username);
+    scanf("%s", t.p.username);
     t.action = LOGIN;
-    t.player.pid = getpid();
+    t.p.pid = getpid();
     write(fd, &t, sizeof(t));
     sleep(1);
     close(fd);
@@ -73,13 +93,20 @@ void *receiver() {
     printf("Error opening FIFO of Player. Leaving...\n");
     shutdown();
   }
-
   do {
     read(fd_receive, &receive, sizeof(receive));
 
     switch (receive.action) {
+    case SERVER_SHUTDOWN: // SERVIDOR TERMINOU
+      printf("The server has been shut down!\n");
+      serverShutdown();
+      break;
     case LOGGED:
       logged = 1;
+      printf("%s", receive.message);
+      break;
+
+    case NOTLOGGED:
       printf("%s", receive.message);
       break;
     }

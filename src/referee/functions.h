@@ -3,12 +3,15 @@
 
 #include "../../include/structs.h"
 
-void readingArguments(int argc, char *argv[], Tournment *t);
-void readingenvvars(Tournment *t);
+void readingArguments(int argc, char *argv[]);
+void readingenvvars();
 void SIGhandler(int signo);
 void shutdown();
 void creatingRefereePipe();
-void handleLogin(Tournment *t, Tournment r);
+int handleLogin(Tournment r);
 void *receiver();
+int isNamePlayerOnTheList(char *username);
+void delete_user_from_array(int pid);
+void listAllPlayers();
 
 #endif

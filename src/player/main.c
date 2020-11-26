@@ -17,6 +17,11 @@ int main() {
   }
 
   login(t);
-
+  do
+  {
+    printf("GAME: ");
+    scanf("%s", t.p.username);
+  } while (1);
+  
   shutdown();
 }

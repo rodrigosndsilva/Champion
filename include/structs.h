@@ -12,18 +12,17 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#define MAXPLAYERS 30
+#define MAXPLAYERS 5
 #define GAMEDIR "/home/rodrigo/Desktop/SO/Trabalho/Champion/build/game.exe"
 #define TIMECHAMPIONSHIP 20
 #define WAITINGTIME 5
 #define REFEREE_PIPE "../src/referee/REFEREE_PIPE"
+#define EMPTY -1
 #define LOGIN 1
 #define LOGGED 2
-
-typedef struct {
-  char command[50];
-  int fd;
-} Referee;
+#define NOTLOGGED 3
+#define SERVER_SHUTDOWN 4
+#define CLIENT_SHUTDOWN 5
 
 typedef struct {
   char question[50];
@@ -42,7 +41,6 @@ typedef struct {
   int pid;
   int points;
   int Gamepid;
-  int fd;
 } Player;
 
 typedef struct {
@@ -60,10 +58,10 @@ typedef struct {
   char gameDir[50];
   int action;
   char message[50];
+  int activePlayers;
   Game g;
-  Referee r;
-  Player p[MAXPLAYERS];
-  Player player;
+  Player p;
+  Player *players;
   PlayersinTournment pt;
 } Tournment;
 
