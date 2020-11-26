@@ -1,7 +1,7 @@
-#ifndef __FUNCTIONS_H__
-#define __FUNCTIONS_H__
 #include "../../include/structs.h"
 
-void readFile();
+Tournment t;
 
-#endif
+Tournment readFile(Tournment t);
+void printQandA(Tournment t);
+Tournment runGame(Tournment t);

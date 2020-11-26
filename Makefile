@@ -1,4 +1,4 @@
-SUBDIRS = src/referee src/game src/player include
+SUBDIRS = src/referee src/game src/player
 
 all: $(SUBDIRS)
 

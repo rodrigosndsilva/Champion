@@ -14,10 +14,11 @@
 
 #define MAXPLAYERS 30
 #define GAMEDIR "/home/rodrigo/Desktop/SO/Trabalho/Champion/build/game.exe"
-#define TIMECHAMPION 20
+#define TIMECHAMPIONSHIP 20
 #define WAITINGTIME 5
 #define REFEREE_PIPE "../src/referee/REFEREE_PIPE"
 #define LOGIN 1
+#define LOGGED 2
 
 typedef struct {
   char command[50];
@@ -25,8 +26,8 @@ typedef struct {
 } Referee;
 
 typedef struct {
-  char pergunta[50];
-  char resposta[50];
+  char question[50];
+  char answer[50];
 } QandA;
 
 typedef struct {
@@ -41,6 +42,7 @@ typedef struct {
   int pid;
   int points;
   int Gamepid;
+  int fd;
 } Player;
 
 typedef struct {
@@ -52,15 +54,16 @@ typedef struct {
 
 typedef struct {
   char winner[50];
-  int timeChampion;
+  int timeChampionship;
   int waitingTime;
   int maxPlayers;
   char gameDir[50];
   int action;
-  Player player;
+  char message[50];
   Game g;
   Referee r;
   Player p[MAXPLAYERS];
+  Player player;
   PlayersinTournment pt;
 } Tournment;
 

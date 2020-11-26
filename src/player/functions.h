@@ -5,7 +5,9 @@
 
 void SIGhandler(int signo);
 void shutdown();
-int creatingPlayerPipe();
+void creatingPlayerPipe();
 void checkIfRefereeIsOn();
+void *receiver();
+void login(Tournment t);
 
 #endif /* FUNCTIONS_H */

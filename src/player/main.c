@@ -7,15 +7,16 @@ int main() {
 
   checkIfRefereeIsOn();
   creatingPlayerPipe();
-  printf("\nPlayer iniciado!\n\n");
+  printf("\nProgram Iniciated!\n\n");
 
+  
+  pthread_t thread;
+  if (pthread_create(&thread, NULL, receiver, NULL) != 0) {
+    perror("ERROR creating the thread!\n");
+    shutdown();
+  }
 
-  // do {
-  //   Tournment t;
-  //   printf("Enter a name : ");
-  //   scanf("%s", &p.username);
-  //   write(pipefd[1], V, ds * sizeof(V));
-  // } while ();
+  login(t);
 
   shutdown();
 }

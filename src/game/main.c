@@ -1,6 +1,8 @@
 #include "functions.h"
 
-int main() { // printf() displays the string inside quotation
-  readFile();
+int main() {
+  t = readFile(t);
+  //printQandA(t);
+  t = runGame(t);
   return 0;
 }
