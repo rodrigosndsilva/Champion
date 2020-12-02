@@ -11,9 +11,12 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <linux/limits.h>
 
 #define MAXPLAYERS 5
-#define GAMEDIR "/home/rodrigo/Desktop/SO/Trabalho/Champion/build/game.exe"
+#define GAMEDIR "/home/rodrigo/Desktop/SO/Trabalho/Champion/build/"
 #define TIMECHAMPIONSHIP 20
 #define WAITINGTIME 5
 #define REFEREE_PIPE "../src/referee/REFEREE_PIPE"

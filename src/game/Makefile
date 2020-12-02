@@ -3,7 +3,7 @@ CFLAGS=-c -Wall
 LDFLAGS=-pthread -Wall -Wextra
 SOURCES=main.c functions.c
 OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLE=../../build/game
+EXECUTABLE=../../build/g_1
 
 all: $(SOURCES) $(EXECUTABLE)
 

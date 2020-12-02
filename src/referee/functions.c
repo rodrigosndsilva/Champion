@@ -15,7 +15,7 @@ void SIGhandler(int signo) {
 }
 
 void shutdown() {
-  char PIPE[50];
+  char PIPE[PATH_MAX];
   int fd;
   Tournment send;
   send.action = SERVER_SHUTDOWN;
@@ -137,7 +137,7 @@ void listAllPlayersLogged() {
 
 void *receiver() {
   Tournment receive, send;
-  char PIPE[50];
+  char PIPE[PATH_MAX];
   int flag;
 
   int fd_receive = open(REFEREE_PIPE, O_RDONLY);

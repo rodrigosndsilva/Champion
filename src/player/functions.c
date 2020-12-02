@@ -16,7 +16,7 @@ void SIGhandler(int signo) {
 }
 
 void shutdown() {
-  char PIPE[50];
+  char PIPE[PATH_MAX];
   int fd;
   Tournment send;
 
@@ -36,7 +36,7 @@ void shutdown() {
 }
 
 void serverShutdown() {
-  char PIPE[50];
+  char PIPE[PATH_MAX];
   sprintf(PIPE, "../src/player/PLAYER_PIPE-> %d", getpid());
   unlink(PIPE);
   printf("PLAYER_PIPE-> %d terminated\n", getpid());
@@ -45,7 +45,7 @@ void serverShutdown() {
 }
 
 void creatingPlayerPipe() {
-  char PIPE[50];
+  char PIPE[PATH_MAX];
   sprintf(PIPE, "../src/player/PLAYER_PIPE-> %d", getpid());
   if (mkfifo(PIPE, S_IRWXU) < 0) { // cria o pipe
     printf("Error creating FIFO of Player. Leaving...\n");
@@ -81,7 +81,7 @@ void login(Tournment t) {
 void *receiver() {
   Tournment receive;
   int fd_receive, fd_send;
-  char PIPE[50];
+  char PIPE[PATH_MAX];
 
   fd_send = open(REFEREE_PIPE, O_WRONLY);
   if (fd_send == -1) {
