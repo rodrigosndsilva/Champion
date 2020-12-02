@@ -16,7 +16,7 @@ int handleCommand(char *command) {
     return 1;
   }
   if (strcmp(command, "playerslogged") == 0) {
-    listAllPlayers(&t);
+    listAllPlayersLogged(); 
     return 1;
   }
   return 0;

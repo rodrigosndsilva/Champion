@@ -69,6 +69,7 @@ void login(Tournment t) {
   while (logged == 0) {
     printf("Enter your name: ");
     scanf("%s", t.p.username);
+    checkIfRefereeIsOn();
     t.action = LOGIN;
     t.p.pid = getpid();
     write(fd, &t, sizeof(t));

@@ -2,8 +2,6 @@
 #define __MAIN_H__
 
 #include "../../include/structs.h"
-#include "commands.h"
-#include "functions.h"
 
 Tournment t;
 

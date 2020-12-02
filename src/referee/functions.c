@@ -96,6 +96,7 @@ int isNamePlayerOnTheList(char *username) {
 int handleLogin(Tournment r) {
   if (t.activePlayers != t.maxPlayers) {
     if (isNamePlayerOnTheList(r.p.username) != 1) {
+
       t.players[t.activePlayers].pid = r.p.pid;
       strcpy(t.players[t.activePlayers].username, r.p.username);
       printf("Player-> %d\tUsername: %s\tAdded to Logged Players list!\n",
@@ -109,7 +110,7 @@ int handleLogin(Tournment r) {
     }
 
   } else {
-    printf("Number of players exceeded!Max: %d\n", t.maxPlayers);
+    printf("Number of players exceeded! Max: %d\n", t.maxPlayers);
     return 3;
   }
 }
@@ -124,10 +125,13 @@ void delete_user_from_array(int pid) {
   }
 }
 
-void listAllPlayers() {
+void listAllPlayersLogged() {
+  if (t.activePlayers == 0) {
+    printf("No players logged\n");
+  }     
   for (int i = 0; i < t.activePlayers; i++) {
-    printf("Player-> %d\tUsername: %s\n", t.players[t.activePlayers].pid,
-           t.players[t.activePlayers].username);
+    printf("Player-> %d\tUsername: %s\n", t.players[i].pid,
+           t.players[i].username);
   }
 }
 
@@ -149,8 +153,7 @@ void *receiver() {
     switch (receive.action) {
     case CLIENT_SHUTDOWN:
       delete_user_from_array(receive.p.pid);
-      printf("The user with the PID %d has left the program!\n",
-             receive.p.pid);
+      printf("The user with the PID %d has left the program!\n", receive.p.pid);
       break;
     case LOGIN:
       flag = handleLogin(receive);

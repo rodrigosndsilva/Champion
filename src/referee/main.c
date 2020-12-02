@@ -1,4 +1,6 @@
 #include "main.h"
+#include "commands.h"
+#include "functions.h"
 
 int main(int argc, char *argv[]) {
 

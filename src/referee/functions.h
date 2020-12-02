@@ -12,6 +12,6 @@ int handleLogin(Tournment r);
 void *receiver();
 int isNamePlayerOnTheList(char *username);
 void delete_user_from_array(int pid);
-void listAllPlayers();
+void listAllPlayersLogged();
 
 #endif
