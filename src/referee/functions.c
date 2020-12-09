@@ -114,6 +114,7 @@ int handleLogin(Tournment r) {
     return 3;
   }
 }
+
 void delete_user_from_array(int pid) {
   for (int i = 0; i < t.activePlayers; i++) {
     if (t.players[i].pid == pid) {
