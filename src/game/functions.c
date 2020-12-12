@@ -1,5 +1,42 @@
 #include "functions.h"
 
+void shutdown() {
+  char PIPE[PATH_MAX];
+
+  sprintf(PIPE, "../src/game/Game-> %d", getpid());
+  unlink(PIPE);
+  printf("Game-> %d terminated\n", getpid());
+  pthread_kill(pthread_self(), SIGINT);
+  exit(0);
+}
+
+void serverShutdown() {
+  char PIPE[PATH_MAX];
+  sprintf(PIPE, "../src/game/Game-> %d", getpid());
+  unlink(PIPE);
+  printf("Game-> %d terminated\n", getpid());
+  pthread_kill(pthread_self(), SIGINT);
+  exit(0);
+}
+
+void creatingGamePipe() {
+  char PIPE[PATH_MAX];
+  sprintf(PIPE, "../src/game/Game-> %d", getpid());
+  if (mkfifo(PIPE, S_IRWXU) < 0) { // cria o pipe
+    printf("Error creating FIFO of Game. Leaving...\n");
+    shutdown();
+  }
+  int fd = open(REFEREE_PIPE, O_WRONLY);
+  if (fd == -1) {
+    printf("Error opening FIFO of Referee. Leaving...\n");
+    shutdown();
+  }
+  t.action = GAMEPID;
+  t.g.pid = getpid();
+  write(fd, &t, sizeof(t));
+  close(fd);
+}
+
 Tournment readFile(Tournment t) {
   FILE *fp;
   char *line = NULL;
@@ -62,4 +99,35 @@ Tournment runGame(Tournment t) {
     scanf("%*c");
   }
   return t;
+}
+
+void *receiver() {
+  Tournment receive;
+  int fd_receive, fd_send;
+  char PIPE[PATH_MAX];
+
+  fd_send = open(REFEREE_PIPE, O_WRONLY);
+  if (fd_send == -1) {
+    printf("Error opening FIFO of Referee. Leaving...\n");
+    shutdown();
+  }
+
+  sprintf(PIPE, "../src/game/Game-> %d", getpid());
+  fd_receive = open(PIPE, O_RDONLY);
+
+  if (fd_receive == -1) {
+    printf("Error opening FIFO of Game. Leaving...\n");
+    shutdown();
+  }
+
+  do {
+    read(fd_receive, &receive, sizeof(receive));
+
+    switch (receive.action) {
+    case SERVER_SHUTDOWN: // SERVIDOR TERMINOU
+      printf("The server has been shut down!\n");
+      serverShutdown();
+      break;
+    }
+  } while (1);
 }

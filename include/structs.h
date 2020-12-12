@@ -16,7 +16,8 @@
 #include <linux/limits.h>
 
 #define MAXPLAYERS 5
-#define GAMEDIR "/home/rodrigo/Desktop/SO/Trabalho/Champion/build/"
+#define GAMEDIR "/home/rodrigo/Desktop/SO/Trabalho/Champion/build/g_1"
+#define GAME1 "g_1"
 #define TIMECHAMPIONSHIP 20
 #define WAITINGTIME 5
 #define REFEREE_PIPE "../src/referee/REFEREE_PIPE"
@@ -26,6 +27,7 @@
 #define NOTLOGGED 3
 #define SERVER_SHUTDOWN 4
 #define CLIENT_SHUTDOWN 5
+#define GAMEPID 6
 
 typedef struct {
   char question[50];

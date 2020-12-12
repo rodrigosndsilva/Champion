@@ -27,6 +27,10 @@ void shutdown() {
     close(fd);
   }
 
+  sprintf(PIPE, "../src/game/Game-> %d", t.g.pid);
+  fd = open(PIPE, O_WRONLY);
+  write(fd, &send, sizeof(send));
+
   printf("Referee Terminated!\n");
   unlink(REFEREE_PIPE);
   pthread_kill(pthread_self(), 0);
@@ -129,10 +133,22 @@ void delete_user_from_array(int pid) {
 void listAllPlayersLogged() {
   if (t.activePlayers == 0) {
     printf("No players logged\n");
-  }     
+  }
   for (int i = 0; i < t.activePlayers; i++) {
     printf("Player-> %d\tUsername: %s\n", t.players[i].pid,
            t.players[i].username);
+  }
+}
+
+void createGame() {
+  pid_t pid = fork();
+  if (pid < 0) {
+    perror("Fork failed\n");
+    shutdown();
+  }
+  if (pid == 0) {
+    printf("Game-> %d\n", getpid());
+    execlp(GAMEDIR, GAMEDIR, NULL);
   }
 }
 
@@ -155,6 +171,10 @@ void *receiver() {
     case CLIENT_SHUTDOWN:
       delete_user_from_array(receive.p.pid);
       printf("The user with the PID %d has left the program!\n", receive.p.pid);
+      break;
+    case GAMEPID:
+      t.g.pid = receive.g.pid;
+      printf("Game-> %d\n", t.g.pid);
       break;
     case LOGIN:
       flag = handleLogin(receive);

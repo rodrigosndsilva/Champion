@@ -8,4 +8,4 @@ $(SUBDIRS):
 .PHONY: $(SUBDIRS)
 
 clean: 
-	rm build/* src/*/*.o
+	rm build/* src/*/*.o 

@@ -13,5 +13,6 @@ void *receiver();
 int isNamePlayerOnTheList(char *username);
 void delete_user_from_array(int pid);
 void listAllPlayersLogged();
+void createGame();
 
 #endif

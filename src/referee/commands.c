@@ -15,6 +15,10 @@ int handleCommand(char *command) {
   if (strcmp(command, "players") == 0) {
     return 1;
   }
+  if (strcmp(command, "game") == 0) {
+    createGame();
+    return 1;
+  }
   if (strcmp(command, "playerslogged") == 0) {
     listAllPlayersLogged(); 
     return 1;

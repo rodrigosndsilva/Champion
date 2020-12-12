@@ -15,8 +15,9 @@ int main() {
     perror("ERROR creating the thread!\n");
     shutdown();
   }
-  printf("%d\n",getpid());
+
   login(t);
+  
   do
   {
     printf("GAME: ");
