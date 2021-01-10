@@ -1,4 +1,5 @@
 #include "functions.h"
+#include "main.h"
 
 int logged = 0;
 
@@ -29,9 +30,10 @@ void shutdown() {
     write(fd, &send, sizeof(send));
   }
 
+  close(fd);
   unlink(PIPE);
   printf("PLAYER_PIPE-> %d terminated\n", getpid());
-  pthread_kill(pthread_self(), SIGINT);
+  pthread_cancel(t.p.thread);
   exit(0);
 }
 
@@ -40,7 +42,7 @@ void serverShutdown() {
   sprintf(PIPE, "../src/player/PLAYER_PIPE-> %d", getpid());
   unlink(PIPE);
   printf("PLAYER_PIPE-> %d terminated\n", getpid());
-  pthread_kill(pthread_self(), SIGINT);
+  pthread_cancel(t.p.thread);
   exit(0);
 }
 
@@ -99,17 +101,27 @@ void *receiver() {
 
     switch (receive.action) {
     case SERVER_SHUTDOWN: // SERVIDOR TERMINOU
-      printf("The server has been shut down!\n");
+      printf("The server has been shut down!\n\n");
       serverShutdown();
       break;
     case LOGGED:
       logged = 1;
       printf("%s", receive.message);
       break;
+    case GAMESHUTDOWN:
+      printf("\nYour game was shutdown!\nGame-> %d\n\n", t.p.Gamepid);
+      t.p.Gamepid = receive.p.Gamepid;
+      break;
 
     case NOTLOGGED:
       printf("%s", receive.message);
       break;
+    case GAMEPID:
+      t.p.Gamepid = receive.g.pid;
+      printf("Your game is Game-> %d\n\n", t.p.Gamepid);
+      break;
     }
+    receive.action = EMPTY;
+    // send.action = EMPTY;
   } while (1);
 }

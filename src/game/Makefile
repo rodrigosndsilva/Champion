@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-c -Wall
-LDFLAGS=-pthread -Wall -Wextra
+LDFLAGS=-pthread -Wall -Wextra -g
 SOURCES=main.c functions.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=../../build/g_1

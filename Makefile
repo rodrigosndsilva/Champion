@@ -8,4 +8,4 @@ $(SUBDIRS):
 .PHONY: $(SUBDIRS)
 
 clean: 
-	rm build/* src/*/*.o 
+	rm build/* src/*/*.o src/game/Game-* src/referee/REFEREE_PIPE src/player/PLAYER_PIPE-*

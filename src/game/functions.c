@@ -1,22 +1,36 @@
 #include "functions.h"
+#include "main.h"
+
+void SIGhandler(int signo) {
+
+  switch (signo) {
+  case SIGUSR1:
+    printf("\nSignal received on Game: SIGUSR1.\n");
+    shutdown();
+    break;
+  default:
+    printf("\nSignal received on Game: <%d>.\n", signo);
+    shutdown();
+    break;
+  }
+}
 
 void shutdown() {
   char PIPE[PATH_MAX];
+  int fd;
+  Tournment send;
 
   sprintf(PIPE, "../src/game/Game-> %d", getpid());
-  unlink(PIPE);
-  printf("Game-> %d terminated\n", getpid());
-  pthread_kill(pthread_self(), SIGINT);
-  exit(0);
-}
+  send.g.pid = getpid();
+  send.action = GAMESHUTDOWN;
+  fd = open(REFEREE_PIPE, O_WRONLY);
+  write(fd, &send, sizeof(send));
 
-void serverShutdown() {
-  char PIPE[PATH_MAX];
-  sprintf(PIPE, "../src/game/Game-> %d", getpid());
+  close(fd);
   unlink(PIPE);
   printf("Game-> %d terminated\n", getpid());
-  pthread_kill(pthread_self(), SIGINT);
-  exit(0);
+  pthread_cancel(t.g.thread);
+  exit(55);
 }
 
 void creatingGamePipe() {
@@ -70,8 +84,11 @@ Tournment readFile(Tournment t) {
   fclose(fp);
   if (line)
     free(line);
-  else
-    exit(EXIT_SUCCESS);
+  else {
+    printf("Error freeing line\n");
+    shutdown();
+  }
+
   return t;
 }
 
@@ -108,7 +125,7 @@ void *receiver() {
 
   fd_send = open(REFEREE_PIPE, O_WRONLY);
   if (fd_send == -1) {
-    printf("Error opening FIFO of Referee. Leaving...\n");
+    printf("Error opening FIFO of Referee. 1 Leaving...\n");
     shutdown();
   }
 
@@ -126,7 +143,7 @@ void *receiver() {
     switch (receive.action) {
     case SERVER_SHUTDOWN: // SERVIDOR TERMINOU
       printf("The server has been shut down!\n");
-      serverShutdown();
+      shutdown();
       break;
     }
   } while (1);

@@ -1,6 +1,21 @@
+#include "main.h"
 #include "functions.h"
 
 int main() {
+  pid_t sid;
+
+  sid = setsid();
+  if (sid < 0) {
+    printf("Setsid Error\n");
+    shutdown();
+  }
+
+  close(STDIN_FILENO);
+
+  signal(SIGINT, SIGhandler);
+  signal(SIGHUP, SIGhandler);
+  signal(SIGQUIT, SIGhandler);
+  signal(SIGUSR1, SIGhandler);
 
   creatingGamePipe();
 
@@ -9,11 +24,12 @@ int main() {
     perror("ERROR creating the thread!\n");
     shutdown();
   }
-  sleep(8);
+  t.g.thread = thread;
+
+  sleep(10);
   // t = readFile(t);
   // printQandA(t);
   // t = runGame(t);
-  printf("Terminar Jogo\n");
+
   shutdown();
-  return 0;
 }
